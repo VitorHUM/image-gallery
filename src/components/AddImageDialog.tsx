@@ -2,6 +2,7 @@ import { Button } from '@/components/ui/button';
 import {
 	Dialog,
 	DialogContent,
+	DialogDescription,
 	DialogFooter,
 	DialogHeader,
 	DialogTitle,
@@ -10,71 +11,103 @@ import {
 import { Input } from '@/components/ui/input';
 import { useImageStore } from '@/hooks/useImageStore';
 import { Plus } from 'lucide-react';
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 
 export function AddImageDialog() {
-	const addLocalImage = useImageStore((s) => s.addLocalImage);
 	const [open, setOpen] = useState(false);
 	const [url, setUrl] = useState('');
 	const [title, setTitle] = useState('');
 	const [author, setAuthor] = useState('');
 	const [saving, setSaving] = useState(false);
-	const fileRef = useRef<HTMLInputElement>(null);
+
+	const addImage = useImageStore((s) => s.addImage);
+
+	// Função para resetar todos os campos
+	function resetAll() {
+		setUrl('');
+		setTitle('');
+		setAuthor('');
+	}
+
+	// Função para salvar a foto por URL
+	async function handleSave(event?: React.FormEvent) {
+		event?.preventDefault();
+
+		if (!url || !title) return;
+
+		setSaving(true);
+
+		try {
+			await addImage({
+				urlRegular: url,
+				urlSmall: url,
+				description: title,
+				author: author || 'Você',
+			});
+
+			setOpen(false);
+			resetAll();
+		} finally {
+			setSaving(false);
+		}
+	}
 
 	return (
-		<Dialog open={open} onOpenChange={setOpen}>
+		<Dialog
+			open={open}
+			onOpenChange={(o) => {
+				setOpen(o);
+				if (!o) resetAll();
+			}}
+		>
 			<DialogTrigger asChild>
-				<Button variant="secondary" className="gap-2">
-					<Plus className="h-4 w-4" /> Adicionar
+				<Button className="bg-primary-purple hover:bg-primary-purple/80 gap-2">
+					<Plus className="h-4 w-4" /> Adicionar Foto
 				</Button>
 			</DialogTrigger>
-			<DialogContent>
+
+			<DialogContent className="sm:max-w-md">
 				<DialogHeader>
-					<DialogTitle>Adicionar imagem</DialogTitle>
+					<DialogTitle>Adicionar Foto</DialogTitle>
+
+					<DialogDescription>Insira as informações da foto</DialogDescription>
 				</DialogHeader>
-				<div className="space-y-3">
-					<Input
-						value={url}
-						onChange={(e) => setUrl(e.target.value)}
-						placeholder="URL da imagem (https://...)"
-					/>
+
+				<form onSubmit={handleSave} className="mt-4 space-y-3">
+					<div className="flex items-center gap-2">
+						<Input
+							value={url}
+							onChange={(e) => setUrl(e.target.value)}
+							placeholder="URL da foto"
+							inputMode="url"
+							aria-invalid={!url ? true : undefined}
+						/>
+					</div>
+
 					<Input
 						value={title}
 						onChange={(e) => setTitle(e.target.value)}
-						placeholder="Descrição / título (opcional)"
+						placeholder="Título / Descrição"
+						required
+						aria-invalid={!title ? true : undefined}
 					/>
+
 					<Input
 						value={author}
 						onChange={(e) => setAuthor(e.target.value)}
-						placeholder="Autor (opcional)"
+						placeholder="Autor"
 					/>
-				</div>
-				<DialogFooter>
-					<Button
-						onClick={async () => {
-							if (!url) return;
-							setSaving(true);
-							try {
-								await addLocalImage({
-									urlRegular: url,
-									urlSmall: url,
-									description: title || undefined,
-									author: author || 'Você',
-								});
-								// Mantém o filtro atual ao adicionar
-								setOpen(false);
-								setUrl('');
-								setTitle('');
-								setAuthor('');
-							} finally {
-								setSaving(false);
-							}
-						}}
-						disabled={!url || saving}
-					>
-						Salvar
-					</Button>
-				</DialogFooter>
+
+					<DialogFooter className="mt-2">
+						<Button
+							type="submit"
+							disabled={!url || !title || saving}
+							className="bg-primary-green-dark hover:bg-primary-green-dark/80"
+						>
+							{saving ? 'Salvando...' : 'Salvar'}
+						</Button>
+					</DialogFooter>
+				</form>
 			</DialogContent>
 		</Dialog>
 	);

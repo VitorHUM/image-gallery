@@ -1,9 +1,10 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useImageStore } from '@/hooks/useImageStore';
-import { Search } from 'lucide-react';
-import { useEffect, useMemo, useState } from 'react';
+import { Search, X } from 'lucide-react';
+import { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import { Label } from './ui/label';
 
 export function SearchBar() {
 	const navigate = useNavigate();
@@ -12,46 +13,61 @@ export function SearchBar() {
 	const [value, setValue] = useState(initial);
 	const search = useImageStore((s) => s.search);
 
-	// Debounce
-	const debounced = useMemo(() => {
-		let t: number | undefined;
-		return (q: string) => {
-			window.clearTimeout(t);
-			// 350ms de debounce para UX suave
-			t = window.setTimeout(async () => {
-				await search(q);
-				navigate(q ? `/?q=${encodeURIComponent(q)}` : '/');
-			}, 350);
-		};
-	}, [navigate, search]);
-
 	useEffect(() => {
 		setValue(initial);
 	}, [initial]);
 
+	async function handleSearch(e: React.FormEvent) {
+		e.preventDefault();
+
+		await search(value);
+
+		navigate(value ? `/?q=${encodeURIComponent(value)}` : '/');
+	}
+
 	return (
 		<form
-			onSubmit={async (e) => {
-				e.preventDefault();
-				await search(value);
-				navigate(value ? `/?q=${encodeURIComponent(value)}` : '/');
-			}}
-			className="flex w-full gap-2"
+			onSubmit={handleSearch}
+			role="search"
+			aria-label="Buscar Fotos"
+			className="flex items-center gap-2"
 		>
-			<div className="relative flex-1">
-				<Search className="text-muted-foreground absolute left-2 top-1/2 h-4 w-4 -translate-y-1/2" />
+			<div className="relative">
+				<Label htmlFor="image-search" className="sr-only">
+					Buscar fotos
+				</Label>
+
+				<Search className="pointer-events-none absolute left-2 top-1/2 size-4 -translate-y-1/2 opacity-60" />
+
 				<Input
+					id="image-search"
 					value={value}
-					onChange={(e) => {
-						setValue(e.target.value);
-						debounced(e.target.value);
-					}}
-					placeholder="Buscar imagens..."
-					className="pl-8"
-					aria-label="Buscar imagens"
+					onChange={(e) => setValue(e.target.value)}
+					placeholder="Buscar fotos"
+					className="px-8"
+					aria-label="Buscar Fotos"
 				/>
+
+				{value && (
+					<Button
+						type="button"
+						variant="ghost"
+						size="icon"
+						className="absolute right-0 top-1/2 -translate-y-1/2"
+						aria-label="Limpar busca"
+						onClick={() => setValue('')}
+					>
+						<X className="size-4" />
+					</Button>
+				)}
 			</div>
-			<Button type="submit">Buscar</Button>
+
+			<Button
+				type="submit"
+				className="bg-primary-green-dark hover:bg-primary-green-dark/80"
+			>
+				Buscar
+			</Button>
 		</form>
 	);
 }

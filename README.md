@@ -1,6 +1,6 @@
 ## 📸 [Galeria de Imagens](https://vitorhum.github.io/image-gallery/)
 
-[![Image Gallery Screenshot][app-screenshot]](https://i.imgur.com/edzFZ8d.png)
+[![Image Gallery Screenshot][app-screenshot]](https://i.imgur.com/dWOjZMo.png)
 
 Galeria de imagens que permite ao usuário visualizar uma coleção de imagens, clicar para ver detalhes e adicionar novas imagens.
 <br/>
@@ -51,88 +51,80 @@ shadcn/ui = Componentes acessíveis, composáveis e sem lock-in de estilo.
 ## 🎯 Funcionalidades
 
 <details>
-  <summary><b>Núcleo de tarefas</b></summary>
+  <summary><b>Imagens</b></summary>
   <ul>
-    <li>CRUD completo: criação, leitura (modal), edição (modal) e exclusão (com confirmação).</li>
-    <li>Conclusão rápida: alternância de status via checkbox, sem abrir modal.</li>
-    <li>Rich text real: descrição com formatação (títulos, listas, ênfases, imagens). Em visualização, o conteúdo é renderizado em modo somente leitura, preservando a formatação e suportando imagens (incluindo base64).</a></li>
+    <li>Listagem de imagens provenientes da API pública do Unsplash.</li>
+    <li>Visualização detalhada, com título, autor e data de criação.</li>
+    <li>Adição de imagens personalizadas via URL.</li>
   </ul>
 </details>
 
 <details>
-  <summary><b>Busca, filtros e ordenação</b></summary>
+  <summary><b>Busca e paginação</b></summary>
   <ul>
-    <li>Busca incremental por título, com limpeza rápida (botão “X” e tecla Esc).</li>
-    <li>Filtros por status: Todas, Ativas e Concluídas, com contadores em tempo real.</li>
-    <li>Ordenação configurável: mais recentes, mais antigas, título A–Z e Z–A.</a></li>
+    <li>Busca por termo.</li>
+    <li>Navegação entre páginas de resultados, com carregamento incremental (“Carregar mais”).</li>
+    <li>URL sincronizada: as buscas são refletidas na barra de endereço, permitindo compartilhar links diretos.</li>
   </ul>
 </details>
 
 <details>
-  <summary><b>Validações e UX de edição</b></summary>
+  <summary><b>Validações e UX</b></summary>
   <ul>
-    <li>Título obrigatório e único: impede duplicidade entre tarefas.</li>
-    <li>Edição inteligente: ao editar, é permitido manter o mesmo título da própria tarefa (não é considerado duplicado); alterar apenas a descrição é suportado.</li>
-    <li>Fluxo seguro de exclusão: diálogos de confirmação para excluir individualmente, todas, ou apenas as concluídas; botões desabilitam quando não há itens elegíveis.</a></li>
+    <li>Campos obrigatórios para adição de imagens (título/descrição sempre requerido).</li>
+    <li>Mensagens de erro e feedback visual em ações de busca e adição.</li>
+    <li>Limpeza automática de campos após salvar uma imagem.</li>
   </ul>
 </details>
 
 <details>
   <summary><b>Interface e design</b></summary>
   <ul>
-    <li>Componentes consistentes e acessíveis para modais, diálogos, tooltips, inputs e botões.</li>
-    <li>Layout responsivo e visual limpo, com microinterações discretas.</li>
-    <li>Semântica ARIA, mensagens de status e foco visível.</li>
+    <li>Componentes consistentes e acessíveis (modais, inputs, botões).</li>
+    <li>Layout responsivo, adaptado para desktop e mobile.</li>
+    <li>Microinterações e ícones para navegação mais intuitiva.</li>
+    <li>Semântica ARIA aplicada a inputs, labels e botões.</li>
   </ul>
 </details>
 
 <details>
-  <summary><b>Estado, persistência e performance</b></summary>
+  <summary><b>Estado e performance</b></summary>
   <ul>
-    <li>Estado global centralizado com seletores derivados (contagens, lista filtrada/ordenada).</li>
-    <li>Persistência local: tarefas e preferências gravadas no navegador (localStorage), sem backend.</li>
-    <li>Renderização eficiente: seleção de fatias específicas do estado para evitar re-renderizações desnecessárias.</a></li>
+    <li>Gerenciamento de estado global.</li>
+    <li>Seletores eficientes para evitar re-renderizações desnecessárias.</li>
+    <li>Sincronização de busca e resultados.</li>
   </ul>
 </details>
 
 <details>
-  <summary><b>Privacidade e confiabilidade</b></summary>
+  <summary><b>Integrações e dados</b></summary>
   <ul>
-    <li>Dados locais: nenhuma tarefa sai do seu dispositivo.</li>
-    <li>Tolerante a offline: funciona mesmo sem conexão, pois tudo está no navegador.</li>
+    <li>Integração com a API do Unsplash para carregamento inicial de imagens.</li>
+    <li>Possibilidade de complementar a galeria com imagens adicionadas pelo usuário via URL.</li>
+    <li>As imagens personalizadas ficam salvas em memória local da aplicação (não persistem em backend).</li>
   </ul>
 </details>
 
 ## 👀 Utilização
 
-- Criar tarefa: clique em Nova tarefa, preencha o título (obrigatório e único) e, se quiser, a descrição com formatação (negrito, listas, imagens...). Clique em Salvar.
+- Buscar imagens: digite no campo de busca e clique em “Buscar” ou pressione Enter. Use o botão “X” para limpar o campo.
 
-- Visualizar detalhes: clique no título ou em qualquer parte da linha da tarefa. Uma janela abre em modo de leitura mostrando a descrição formatada e a data/hora de criação. Clique em Fechar.
+- Navegar entre resultados: use o botão “Carregar mais” para trazer mais imagens.
 
-- Editar tarefa: clique no ícone de lápis. Na janela, altere o título/descrição e Salve. Se mudar só a descrição, o título original é mantido.
+- Visualizar detalhes: clique em uma imagem para abrir o a página de detalhes, com título, autor e data de criação.
 
-- Concluir/reativar: marque/desmarque a caixinha à esquerda da tarefa.
-
-- Filtrar: use "Todas, Ativas ou Concluídas" para ver apenas o que precisa.
-
-- Buscar por título: use o campo "Buscar por título". Clique no X para limpar a busca.
-
-- Ordenar: no seletor "Ordenar por", escolha Mais recentes, Mais antigas, Título A–Z ou Título Z–A.
-
-- Excluir uma tarefa: clique no ícone de lixeira e confirme.
-
-- Excluir tarefas concluídas: clique em "Excluir tarefas CONCLUÍDAS" e confirme. (Desabilitado se não houver tarefas concluídas.)
-
-- Excluir todas tarefas: clique em "Excluir tarefas CONCLUÍDAS" e confirme. (Desabilitado se não houver tarefas.)
+- Adicionar imagem: clique em “+ Adicionar Foto”, insira a URL da imagem, título/descrição (obrigatório) e autor (opcional), e clique em Salvar.
 
 - Onde os dados ficam salvos?
   <br/>
-  Tudo é salvo localmente no seu navegador (sem login). Se limpar os dados do navegador, as tarefas serão removidas.
+  As imagens da API vêm diretamente do Unsplash. As imagens adicionadas manualmente são mantidas apenas na memória da aplicação.
 
 ## 🧭 Roadmap
 
 - [ ] Adicionar Dark Mode
-- [ ] Adicionar atalhos de teclados (Hotkeys)
+- [ ] Adicionar imagens localmente
+- [ ] Adicionar botão para baixar imagens
+- [ ] Criar coleção de imagens
 - [ ] Implementar login e autenticação
 - [ ] Internacionalização
 
