@@ -128,7 +128,7 @@ shadcn/ui = Componentes acessíveis, composáveis e sem lock-in de estilo.
 - [ ] Implementar login e autenticação
 - [ ] Internacionalização
 
-[app-screenshot]: https://i.imgur.com/edzFZ8d.png
+[app-screenshot]: https://i.imgur.com/dWOjZMo.png
 [Vite]: https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=Vite&logoColor=white
 [Vite-url]: https://vite.dev/
 [React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
