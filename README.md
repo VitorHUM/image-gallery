@@ -1,9 +1,8 @@
-## 📃 [Galeria de Imagens](https://vitorhum.github.io/image-gallery/)
+## 📸 [Galeria de Imagens](https://vitorhum.github.io/image-gallery/)
 
 [![Image Gallery Screenshot][app-screenshot]](https://i.imgur.com/edzFZ8d.png)
 
-Aplicação de lista de tarefas focada em UX, acessibilidade e simplicidade.
-Permite criar, visualizar, editar e excluir tarefas, persistência local de dados, entre outras funcionalidades.
+Galeria de imagens que permite ao usuário visualizar uma coleção de imagens, clicar para ver detalhes e adicionar novas imagens.
 <br/>
 Você pode acessar a aplicação e testar através do link: https://vitorhum.github.io/image-gallery/
 
@@ -35,7 +34,7 @@ shadcn/ui = Componentes acessíveis, composáveis e sem lock-in de estilo.
 
 1. Clonar o repositório
    ```sh
-   git clone https://github.com/VitorHUM/todo-list
+   git clone https://github.com/VitorHUM/image-gallery
    ```
 2. Instalar os pacotes
    ```sh
