@@ -40,7 +40,15 @@ shadcn/ui = Componentes acessíveis, composáveis e sem lock-in de estilo.
    ```sh
    npm install
    ```
-3. Iniciar a aplicação
+3. Configurar as variáveis de ambiente
+   - Como nosso projeto utiliza a API Unsplash é necessário criar uma conta de desenvolvedor em https://unsplash.com/developers;
+   - Após isso é necessário criar uma aplicação no site Unsplash para assim conseguir uma "_Access Key_";
+   - Criar um arquivo chamado ".env.local" na raiz do projeto;
+   - Adicionar a "_Access Key_" da aplicação Unsplash na seguinte variável:
+   ```sh
+   VITE_UNSPLASH_ACCESS_KEY=sua_access_key
+   ```
+4. Iniciar a aplicação
 
    ```sh
    npm run dev
